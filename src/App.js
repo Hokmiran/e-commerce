@@ -1,13 +1,7 @@
 import './App.css';
 import Layout from './components/Layout';
-import { Routes, Route } from 'react-router-dom'
-// import Products from './pages/Products';
-// import BasketPage from './pages/BasketPage';
-// import Home from './pages/Home';
-// import Login from './pages/Login';
-// import SignUp from './pages/SignUp';
+import { Routes, Route } from 'react-router-dom';
 import { routes } from './routes/Routes';
-
 
 
 function App() {
@@ -21,7 +15,7 @@ function App() {
           })
         }
       </Routes>
-    </Layout>
+    </Layout >
   );
 }
 

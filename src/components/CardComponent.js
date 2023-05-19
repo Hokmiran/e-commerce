@@ -28,17 +28,19 @@ function CardComponent({ index }) {
 
     return (
 
-        <Grid item xs={4}>
-            <Card sx={{
-                maxWidth: 345,
-                borderTopRightRadius: 4,
-                borderTopLeftRadius: 4,
-            }}>
+        <Grid item xs={12} sm={12} md={4} lg={4} >
+            <Card
+                sx={{
+                    maxWidth: 345,
+                    borderTopRightRadius: 4,
+                    borderTopLeftRadius: 4,
+                }}>
                 <CardMedia
                     component="img"
                     alt="green iguana"
                     height="140"
                     image={index.image}
+                    sx={{ objectFit: "contain" }}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
