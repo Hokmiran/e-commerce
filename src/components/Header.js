@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,13 +13,22 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { Context } from '../context/Context';
+import { Badge } from '@mui/material';
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const { cart } = React.useContext(Context);
+    const [cartItemCount, setCartItemCount] = useState(0);
+
+    useEffect(() => {
+        setCartItemCount(cart.length);
+    }, [cart]);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -95,7 +104,6 @@ function Header() {
                                     </Link>
                                 </Typography>
                             </MenuItem>
-
                         </Menu>
                     </Box>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -118,22 +126,13 @@ function Header() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Link style={{ textDecoration: 'none' }} to='/products'>
+                        <Link style={{ textDecoration: 'none' }} to='/'>
                             <Button
 
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                Products
-                            </Button>
-                        </Link>
-                        <Link style={{ textDecoration: 'none' }} to='/products'>
-                            <Button
-
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                Products
+                                Home
                             </Button>
                         </Link>
                         <Link style={{ textDecoration: 'none' }} to='/products'>
@@ -147,9 +146,26 @@ function Header() {
                         </Link>
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
+                        <Link to='/sign-in'>
+                        <Button
+                            
+                            sx={{ textTransform: 'none', marginRight: 2, color: 'white' }}
+                        >
+                            Login
+                        </Button>
+                        </Link>
+                        <Tooltip title="Open basket">
+                            <Link to='/basket-page'>
+                                <Badge badgeContent={cartItemCount} color="secondary">
+                                    <IconButton sx={{ p: 0 }}>
+                                        <ShoppingBasketIcon />
+                                    </IconButton>
+                                </Badge>
+                            </Link>
+                        </Tooltip>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
