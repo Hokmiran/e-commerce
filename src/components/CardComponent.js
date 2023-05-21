@@ -28,10 +28,11 @@ function CardComponent({ index }) {
 
     return (
 
-        <Grid item xs={12} sm={12} md={4} lg={4} >
+        <Grid item xs={12} sm={6} md={4} lg={4} >
             <Card
                 sx={{
                     maxWidth: 345,
+                    // height: 500,
                     borderTopRightRadius: 4,
                     borderTopLeftRadius: 4,
                 }}>
@@ -43,15 +44,17 @@ function CardComponent({ index }) {
                     sx={{ objectFit: "contain" }}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {index.title}
+                    <Typography gutterBottom variant="h6" component="div">
+                        {index.title.substring(0, 25)}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {index.description}
+                    <Typography sx={{fontSize: 16}} variant="body2" color="text.secondary">
+                        {index.description.substring(0, 101)}...
+                    </Typography>
+                    <Typography mt={1} variant="h5" color="text.primary">
+                        {index.price}$
                     </Typography>
                 </CardContent>
                 <CardActions>
-
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}

@@ -99,7 +99,14 @@ function Header() {
                         >
                             <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">
-                                    <Link to='/products'>
+                                    <Link to='/' style={{ textDecoration: 'none' }}>
+                                        Home
+                                    </Link>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">
+                                    <Link to='/products' style={{ textDecoration: 'none' }}>
                                         Products
                                     </Link>
                                 </Typography>
@@ -128,7 +135,6 @@ function Header() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Link style={{ textDecoration: 'none' }} to='/'>
                             <Button
-
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
@@ -137,7 +143,6 @@ function Header() {
                         </Link>
                         <Link style={{ textDecoration: 'none' }} to='/products'>
                             <Button
-
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
@@ -148,12 +153,12 @@ function Header() {
 
                     <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
                         <Link to='/sign-in'>
-                        <Button
-                            
-                            sx={{ textTransform: 'none', marginRight: 2, color: 'white' }}
-                        >
-                            Login
-                        </Button>
+                            <Button
+
+                                sx={{ textTransform: 'none', marginRight: 2, color: 'white' }}
+                            >
+                                Login
+                            </Button>
                         </Link>
                         <Tooltip title="Open basket">
                             <Link to='/basket-page'>
