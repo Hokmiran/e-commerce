@@ -36,6 +36,7 @@ function Products() {
             </div>
         )
     }
+    
     return (
         <Container>
             <Grid container spacing={4} mt={2} >

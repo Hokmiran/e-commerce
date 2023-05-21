@@ -1,8 +1,10 @@
 import Home from "../pages/Home";
 import Products from "../pages/Products";
 import BasketPage from "../pages/BasketPage"
-import Login  from "../pages/Login";
+import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import Admin from "../pages/Admin";
+import AuthLogin from "../components/AuthLogin";
 
 export const routes = [
     {
@@ -24,5 +26,12 @@ export const routes = [
     {
         path: '/sign-up',
         element: <SignUp />
-    }
+    },
+    {
+        path: '/admin',
+        element:
+            <AuthLogin>
+                <Admin />
+            </AuthLogin>
+    },
 ]

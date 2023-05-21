@@ -12,18 +12,18 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Context } from '../context/Context';
 import { Badge } from '@mui/material';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
+    
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    const { cart } = React.useContext(Context);
+    const navigate = useNavigate()
+    const { cart, loggedIn, setLoggedIn } = React.useContext(Context);
     const [cartItemCount, setCartItemCount] = useState(0);
 
     useEffect(() => {
@@ -44,7 +44,12 @@ function Header() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
+    const check = () => {
+        if (loggedIn) {
+            setLoggedIn([])
+        }
+        navigate("/sign-in")
+    }
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -111,6 +116,13 @@ function Header() {
                                     </Link>
                                 </Typography>
                             </MenuItem>
+                            {loggedIn.length > 0 && <MenuItem onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">
+                                    <Link to='/admin' style={{ textDecoration: 'none' }}>
+                                        Admin
+                                    </Link>
+                                </Typography>
+                            </MenuItem>}
                         </Menu>
                     </Box>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -149,17 +161,25 @@ function Header() {
                                 Products
                             </Button>
                         </Link>
+                        {loggedIn.length > 0 &&
+                            <Link style={{ textDecoration: 'none' }} to='/admin'>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    Admin
+                                </Button>
+                            </Link>
+                        }
                     </Box>
 
                     <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
-                        <Link to='/sign-in'>
-                            <Button
-
-                                sx={{ textTransform: 'none', marginRight: 2, color: 'white' }}
-                            >
-                                Login
-                            </Button>
-                        </Link>
+                        <Button
+                            onClick={check}
+                            sx={{ textTransform: 'none', marginRight: 2, color: 'white' }}
+                        >
+                            {!loggedIn.length > 0 ? "Login" : ""}
+                        </Button>
                         <Tooltip title="Open basket">
                             <Link to='/basket-page'>
                                 <Badge badgeContent={cartItemCount} color="secondary">
@@ -169,11 +189,13 @@ function Header() {
                                 </Badge>
                             </Link>
                         </Tooltip>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
+                        {loggedIn.length > 0 &&
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
+                                    <Avatar alt="Remy Sharp" src="" />
+                                </IconButton>
+                            </Tooltip>
+                        }
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
@@ -190,11 +212,9 @@ function Header() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center" onClick={check}>Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

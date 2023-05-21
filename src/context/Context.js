@@ -6,6 +6,9 @@ export const Context = createContext(null);
 export const ContextProvider = ({ children }) => {
 
     const [cart, setCart] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(JSON.parse(localStorage.getItem('loggedIn')) || [])
+    const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
+
     const { data, isLoading, error } = useQuery('products', () => {
         return axios.get("https://fakestoreapi.com/products")
 
@@ -49,13 +52,26 @@ export const ContextProvider = ({ children }) => {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
+    useEffect(() => {
+        const checkLocal = JSON.parse(localStorage.getItem("loggedIn"));
+        if (!checkLocal?.length > 0) {
+            localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+        } else {
+            localStorage.setItem("loggedIn", JSON.stringify([...loggedIn]));
+        }
+    }, [loggedIn]);
+
     const values = {
         data,
         isLoading,
         error,
         cart,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        users,
+        setUsers,
+        loggedIn,
+        setLoggedIn
     };
 
     return <Context.Provider value={values}>{children}</Context.Provider>;
