@@ -22,13 +22,12 @@ function EditProduct() {
         nav('/admin')
     };
 
-
-
     const addProductValidationSchema = Yup.object().shape({
         title: Yup.string()
             .required("This field cannot be empty"),
         description: Yup.string()
             .required("This field cannot be empty"),
+        image: Yup.string().url('Invalid image URL').required('Image URL is required'),
         price: Yup.string()
             .required("This field cannot be empty")
     })
@@ -38,6 +37,7 @@ function EditProduct() {
             id: (editableData && editableData[0]?.id) || "",
             title: (editableData && editableData[0]?.title) || "",
             description: (editableData && editableData[0]?.description) || "",
+            image: (editableData && editableData[0]?.image) || "",
             price: (editableData && editableData[0]?.price) || ""
         },
         validationSchema: addProductValidationSchema,
@@ -52,11 +52,12 @@ function EditProduct() {
             formik.setValues({
                 title: editableData[0]?.title || "",
                 description: editableData[0]?.description || "",
+                image: (editableData && editableData[0]?.image) || "",
                 price: editableData[0]?.price || ""
             });
         }
     }, [editableData, formik.values.title, formik.values.description, formik.values.price]);
-
+    console.log(editableData);
     return (<>
 
         <form style={{ padding: 30 }} onSubmit={formik.handleSubmit}>
@@ -76,6 +77,15 @@ function EditProduct() {
                 {formik.touched.description && formik.errors?.description &&
                     <p className='validationText'>
                         {formik.errors.description}
+                    </p>}
+            </div>
+            <div className="form-group">
+                <label htmlFor="image" className="form-label">Image</label>
+                <br />
+                <input className="form-input" id="image" name="image" type="text" onChange={formik.handleChange} value={formik.values.image} />
+                {formik.touched.image && formik.errors?.image &&
+                    <p className='validationText'>
+                        {formik.errors.image}
                     </p>}
             </div>
             <div className="form-group">
