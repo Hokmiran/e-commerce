@@ -11,11 +11,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Context } from "../context/Context";
 import ModalDelete from "../components/ModalDelete";
+import { useNavigate } from "react-router-dom";
 
 function ProductTable() {
   const { data, isLoading, error } = React.useContext(Context);
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState("");
+  const nav = useNavigate();
 
   const handleOpen = () => {
     setOpen(true);
@@ -55,7 +57,6 @@ function ProductTable() {
     );
   }
 
-  console.log(product);
 
   return (
     <>
@@ -108,6 +109,7 @@ function ProductTable() {
                   </IconButton>
                   <IconButton
                     onClick={() => {
+                      nav(`/edit/${item.id}`)
                       console.log("Edit clicked for product ID:", item.id);
                     }}
                     color="primary"

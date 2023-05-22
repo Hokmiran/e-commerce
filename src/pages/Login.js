@@ -22,6 +22,7 @@ function Login() {
     const checkUser = users?.find(
       (q) => q.email === email && q.password === password
     );
+    
     if (checkUser) {
       setLoggedIn([{ email, password }]);
       navigate("/");
