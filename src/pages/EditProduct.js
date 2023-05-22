@@ -10,13 +10,13 @@ function EditProduct() {
 
     const { id } = useParams();
     const { data } = useContext(Context)
-    const editableData = data && data?.data?.filter(q => q.id === id)
+    const editableData = data && data?.data?.filter(q => q.id == id)
     const nav = useNavigate();
 
 
     const addProductValidationSchema = Yup.object().shape({
         title: Yup.string()
-            .required("This field cannot be empty").max(50, 'You cannot add more than 50 characters'),
+            .required("This field cannot be empty"),
         description: Yup.string()
             .required("This field cannot be empty"),
         price: Yup.string()
@@ -25,10 +25,10 @@ function EditProduct() {
 
     const formik = useFormik({
         initialValues: {
-            id:editableData && editableData[0]?.id,
-            title: editableData && editableData[0]?.title,
-            description: editableData && editableData[0]?.description,
-            price: editableData && editableData[0]?.price
+            id:editableData && editableData[0]?.id||"",
+            title: editableData && editableData[0]?.title||"",
+            description: editableData && editableData[0]?.description||"",
+            price: editableData && editableData[0]?.price||""
         },
         validationSchema: addProductValidationSchema,
         onSubmit: (values) => {
@@ -40,9 +40,9 @@ function EditProduct() {
     useEffect(() => {
         if (!formik.values.title && !formik.values.description && !formik.values.price && editableData) {
             formik.setValues({
-                title: editableData[0]?.title,
-                description: editableData[0]?.description,
-                price: editableData[0]?.price
+                title: editableData[0]?.title || "",
+                description: editableData[0]?.description || "",
+                price: editableData[0]?.price || ""
             });
         }
     }, [editableData, formik.values.title, formik.values.description, formik.values.price]);
@@ -66,7 +66,7 @@ function EditProduct() {
                 <label htmlFor="price" className="form-label">Price</label>
                 <br />
                 <input className="form-input" id="price" name="price" type="text" onChange={formik.handleChange} value={formik.values.price} />
-                {formik.touched.price && formik.errors?.price && <p style={{ color: 'red' }}>{formik.errors.price}</p>}
+                {formik.touched.price && formik.errors?.price && <p style={{ color: 'red' }}>{formik.errors?.price}</p>}
             </div>
             <div>
                 <button className="form-button" type="submit">Save changes</button>
