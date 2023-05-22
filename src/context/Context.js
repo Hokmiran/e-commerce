@@ -42,6 +42,14 @@ export const ContextProvider = ({ children }) => {
             return updatedCart;
         });
     };
+    const deleteFromChart = async (productId) => {
+        try {
+            await axios.delete(`https://fakestoreapi.com/products/${productId}`);
+        } catch (error) {
+            console.log("Delete request error:", error);
+        }
+    };
+
     useEffect(() => {
         const savedCart = localStorage.getItem("cart");
         const initialCart = savedCart ? JSON.parse(savedCart) : [];
@@ -71,7 +79,8 @@ export const ContextProvider = ({ children }) => {
         users,
         setUsers,
         loggedIn,
-        setLoggedIn
+        setLoggedIn,
+        deleteFromChart
     };
 
     return <Context.Provider value={values}>{children}</Context.Provider>;

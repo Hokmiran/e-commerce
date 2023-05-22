@@ -16,9 +16,11 @@ function Cart() {
     const handleAddToCart = (product) => {
         addToCart(product);
     };
+    
     const handleRemoveFromCart = (productId) => {
         removeFromCart(productId);
     };
+
     const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
     if (isLoading) {
         return (
@@ -106,9 +108,11 @@ function Cart() {
                 }
 
             </Grid>
-            <Typography mt={4} variant="h4" color="text.primary">
-                Total: {total.toFixed(2)}$
-            </Typography>
+            {cart.length > 0 &&
+                <Typography key={cart.length} mt={4} variant="h4" color="text.primary">
+                    Total: {total.toFixed(2)}$
+                </Typography>
+            }
         </Container>
     );
 }
