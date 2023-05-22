@@ -6,7 +6,13 @@ import { ContextProvider } from './context/Context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    }
+  }
+});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -17,7 +23,7 @@ root.render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ContextProvider> 
+    </ContextProvider>
   </QueryClientProvider>
 
 );

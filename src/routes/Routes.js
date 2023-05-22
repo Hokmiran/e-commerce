@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import Admin from "../pages/Admin";
 import AuthLogin from "../components/AuthLogin";
 import EditProduct from "../pages/EditProduct";
+import AddProduct from "../pages/AddProduct";
 
 export const routes = [
     {
@@ -27,6 +28,10 @@ export const routes = [
     {
         path: '/sign-up',
         element: <SignUp />
+    },
+    {
+        path: '/add-product',
+        element: <AddProduct />
     },
     {
         path: '/edit/:id',

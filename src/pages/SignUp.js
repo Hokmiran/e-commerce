@@ -26,6 +26,7 @@ const validationSchema = Yup.object().shape({
 function SignUp() {
     const [open, setOpen] = useState(false);
     const { users, setUsers } = useContext(Context)
+    const successSignUpText = 'You have been registered successfully'
     const nav = useNavigate();
 
     const handleSubmit = (values, { resetForm }) => {
@@ -204,7 +205,7 @@ function SignUp() {
                     </Form>
                 </Formik>
             </Box>
-            <ModalComponent open={open} handleClose={handleClose} />
+            <ModalComponent open={open} handleClose={handleClose} successSignUpText={successSignUpText} />
 
         </Container>
     );

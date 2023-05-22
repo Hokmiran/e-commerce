@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
 import { Context } from '../context/Context';
+import ModalComponent from '../components/ModalComponent';
 
 
 function EditProduct() {
@@ -11,7 +12,16 @@ function EditProduct() {
     const { id } = useParams();
     const { data } = useContext(Context)
     const editableData = data && data?.data?.filter(q => q.id == id)
+    const [open, setOpen] = useState(false);
+    const successEditText = 'Your changes successfully updated'
     const nav = useNavigate();
+
+
+    const handleClose = () => {
+        setOpen(false);
+        nav('/admin')
+    };
+
 
 
     const addProductValidationSchema = Yup.object().shape({
@@ -25,18 +35,18 @@ function EditProduct() {
 
     const formik = useFormik({
         initialValues: {
-            id:editableData && editableData[0]?.id||"",
-            title: editableData && editableData[0]?.title||"",
-            description: editableData && editableData[0]?.description||"",
-            price: editableData && editableData[0]?.price||""
+            id: (editableData && editableData[0]?.id) || "",
+            title: (editableData && editableData[0]?.title) || "",
+            description: (editableData && editableData[0]?.description) || "",
+            price: (editableData && editableData[0]?.price) || ""
         },
         validationSchema: addProductValidationSchema,
         onSubmit: (values) => {
             axios.put(`https://fakestoreapi.com/products/${editableData[0]?.id}`, values)
-            nav('/')
+            setOpen(true);
         }
     })
-  
+
     useEffect(() => {
         if (!formik.values.title && !formik.values.description && !formik.values.price && editableData) {
             formik.setValues({
@@ -54,24 +64,34 @@ function EditProduct() {
                 <label htmlFor="title" className="form-label">Title</label>
                 <br />
                 <input className="form-input" id="title" name="title" type="text" onChange={formik.handleChange} value={formik.values.title} />
-                {formik.touched.title && formik.errors?.title && <p style={{ color: 'red' }}>{formik.errors.title}</p>}
+                {formik.touched.title && formik.errors?.title &&
+                    <p className='validationText'>
+                        {formik.errors.title}
+                    </p>}
             </div>
             <div className="form-group">
                 <label htmlFor="description" className="form-label">Description</label>
                 <br />
                 <input className="form-input" id="description" name="description" type="text" onChange={formik.handleChange} value={formik.values.description} />
-                {formik.touched.description && formik.errors?.description && <p style={{ color: 'red' }}>{formik.errors.description}</p>}
+                {formik.touched.description && formik.errors?.description &&
+                    <p className='validationText'>
+                        {formik.errors.description}
+                    </p>}
             </div>
             <div className="form-group">
                 <label htmlFor="price" className="form-label">Price</label>
                 <br />
                 <input className="form-input" id="price" name="price" type="text" onChange={formik.handleChange} value={formik.values.price} />
-                {formik.touched.price && formik.errors?.price && <p style={{ color: 'red' }}>{formik.errors?.price}</p>}
+                {formik.touched.price && formik.errors?.price &&
+                    <p className='validationText'>
+                        {formik.errors?.price}
+                    </p>}
             </div>
             <div>
                 <button className="form-button" type="submit">Save changes</button>
             </div>
         </form>
+        <ModalComponent open={open} handleClose={handleClose} successEditText={successEditText} />
     </>
 
     )

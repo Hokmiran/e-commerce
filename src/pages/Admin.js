@@ -65,10 +65,9 @@ function ProductTable() {
           variant="contained"
           color="primary"
           onClick={() => {
-            // Handle new product addition
-            console.log("Add New Product clicked");
+            nav('/add-product')
           }}
-        >
+        > 
           Add New Product
         </Button>
       </div>
@@ -110,7 +109,6 @@ function ProductTable() {
                   <IconButton
                     onClick={() => {
                       nav(`/edit/${item.id}`)
-                      console.log("Edit clicked for product ID:", item.id);
                     }}
                     color="primary"
                     aria-label="edit"

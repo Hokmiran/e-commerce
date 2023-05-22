@@ -14,7 +14,6 @@ function ModalDelete({ open, handleClose, product }) {
     return (
 
         <Modal
-
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-title"

@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography } from '@mui/material'
 import React from 'react'
 
-function ModalComponent({open, handleClose}) {
+function ModalComponent({open, handleClose, successEditText, successAddProductText, successSignUpText}) {
 
     return (
         
@@ -22,10 +22,13 @@ function ModalComponent({open, handleClose}) {
                     boxShadow: 24,
                     p: 4,
                     textAlign: "center",
+                    borderRadius: 4
                 }}
             >
                 <Typography variant="h6" id="modal-title" gutterBottom>
-                    You have been registered successfully
+                   {successEditText}
+                   {successSignUpText}
+                   {successAddProductText}
                 </Typography>
                 <Button variant="contained" onClick={handleClose}>
                     OK
