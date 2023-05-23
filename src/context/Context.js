@@ -50,6 +50,10 @@ export const ContextProvider = ({ children }) => {
         }
     };
 
+    const clearCart = () => {
+        setCart([]);
+    };
+
     useEffect(() => {
         const savedCart = localStorage.getItem("cart");
         const initialCart = savedCart ? JSON.parse(savedCart) : [];
@@ -80,7 +84,8 @@ export const ContextProvider = ({ children }) => {
         setUsers,
         loggedIn,
         setLoggedIn,
-        deleteFromChart
+        deleteFromChart,
+        clearCart
     };
 
     return <Context.Provider value={values}>{children}</Context.Provider>;

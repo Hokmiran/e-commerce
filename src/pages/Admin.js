@@ -61,13 +61,16 @@ function ProductTable() {
   return (
     <>
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem", marginTop: "1rem", marginRight: 10 }}>
+        <Button sx={{marginRight: 5}} variant="contained" color="primary" onClick={() => nav('/orders')}>
+          Go to Orders page
+        </Button>
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
             nav('/add-product')
           }}
-        > 
+        >
           Add New Product
         </Button>
       </div>
