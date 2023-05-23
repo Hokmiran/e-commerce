@@ -57,7 +57,7 @@ function EditProduct() {
             });
         }
     }, [editableData, formik.values.title, formik.values.description, formik.values.price]);
-    console.log(editableData);
+
     return (<>
 
         <form style={{ padding: 30 }} onSubmit={formik.handleSubmit}>

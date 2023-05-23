@@ -1,10 +1,10 @@
 import { Box, Button, Modal, Typography } from '@mui/material'
 import React from 'react'
 
-function ModalComponent({open, handleClose, successEditText, successAddProductText, successSignUpText}) {
+function ModalComponent({ open, handleClose, successEditText, successAddProductText, successSignUpText, successOrdeText }) {
 
     return (
-        
+
         <Modal
             open={open}
             onClose={handleClose}
@@ -26,9 +26,10 @@ function ModalComponent({open, handleClose, successEditText, successAddProductTe
                 }}
             >
                 <Typography variant="h6" id="modal-title" gutterBottom>
-                   {successEditText}
-                   {successSignUpText}
-                   {successAddProductText}
+                    {successOrdeText}
+                    {successEditText}
+                    {successSignUpText}
+                    {successAddProductText}
                 </Typography>
                 <Button variant="contained" onClick={handleClose}>
                     OK

@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActions, CircularProgress, Container, Grid, TextField } from '@mui/material';
+import { Box, Button, CardActions, CircularProgress, Container, Grid, Modal, TextField } from '@mui/material';
 import { Context } from '../context/Context';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import NoData from '../components/lottie/Lottie';
+import ModalComponent from '../components/ModalComponent';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -18,7 +20,12 @@ const validationSchema = Yup.object().shape({
 });
 
 function Cart() {
-    const { cart, removeFromCart, isLoading, error, addToCart, clearCart } = useContext(Context);
+
+    const nav = useNavigate();
+    const { cart, removeFromCart, isLoading, error, addToCart, clearCart, loggedIn } = useContext(Context);
+    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+    const [login, setLogin] = useState(false);
+    const successOrdeText = 'Your request has been accepted succesfuly'
 
     const handleAddToCart = (product) => {
         addToCart(product);
@@ -59,7 +66,13 @@ function Cart() {
             </div>
         );
     }
+
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        if (loggedIn.length < 1) {
+            setLogin(true)
+            return;
+        }
+
         const order = {
             name: values.name,
             address: values.address,
@@ -87,7 +100,17 @@ function Cart() {
         clearCart();
         setSubmitting(false);
         resetForm();
+        setIsOrderPlaced(true);
     };
+
+    const handleCloseModal = () => {
+        setIsOrderPlaced(false);
+    };
+
+    const closeModal = () => {
+        setLogin(false);
+        nav('/sign-in')
+    }
 
     return (
         <Container>
@@ -193,6 +216,37 @@ function Cart() {
                     )}
                 </Formik>
             )}
+
+            <ModalComponent successOrdeText={successOrdeText} open={isOrderPlaced} handleClose={handleCloseModal} />
+            <Modal
+                open={login}
+                onClose={closeModal}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+            >
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 400,
+                        bgcolor: "background.paper",
+                        boxShadow: 24,
+                        p: 4,
+                        textAlign: "center",
+                        borderRadius: 4
+                    }}
+                >
+                    <Typography variant="h6" id="modal-title" gutterBottom>
+                       To complete your order you need to login
+                    </Typography>
+                    <Button variant="contained" onClick={closeModal}>
+                        OK
+                    </Button>
+                </Box>
+            </Modal>
+
         </Container>
     );
 }
