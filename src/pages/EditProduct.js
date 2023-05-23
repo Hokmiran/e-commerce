@@ -73,7 +73,7 @@ function EditProduct() {
             <div className="form-group">
                 <label htmlFor="description" className="form-label">Description</label>
                 <br />
-                <input className="form-input" id="description" name="description" type="text" onChange={formik.handleChange} value={formik.values.description} />
+                <textarea className="textarea" id="description" name="description" type="text" onChange={formik.handleChange} value={formik.values.description} />
                 {formik.touched.description && formik.errors?.description &&
                     <p className='validationText'>
                         {formik.errors.description}

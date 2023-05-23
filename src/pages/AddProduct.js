@@ -77,8 +77,8 @@ function AddProductForm() {
             Description
           </label>
           <br />
-          <input
-            className="form-input"
+          <textarea
+            className="textarea"
             id="description"
             name="description"
             type="text"
