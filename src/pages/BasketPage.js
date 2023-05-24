@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import NoData from '../components/lottie/Lottie';
 import ModalComponent from '../components/ModalComponent';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -26,6 +27,7 @@ function Cart() {
     const [isOrderPlaced, setIsOrderPlaced] = useState(false);
     const [login, setLogin] = useState(false);
     const successOrdeText = 'Your request has been accepted succesfuly'
+    const basket = useSelector((state) => state);
 
     const handleAddToCart = (product) => {
         addToCart(product);
@@ -115,8 +117,8 @@ function Cart() {
     return (
         <Container>
             <Grid container spacing={2}>
-                {cart.length > 0 ? (
-                    cart.map((product) => (
+                {basket.length > 0 ? (
+                    basket.map((product) => (
                         <Grid mt={2} item xs={4} key={product.id}>
                             <Card
                                 sx={{
@@ -239,7 +241,7 @@ function Cart() {
                     }}
                 >
                     <Typography variant="h6" id="modal-title" gutterBottom>
-                       To complete your order you need to login
+                        To complete your order you need to login
                     </Typography>
                     <Button variant="contained" onClick={closeModal}>
                         OK

@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Context } from '../context/Context';
 import { Badge } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 function Header() {
@@ -25,10 +26,11 @@ function Header() {
     const navigate = useNavigate()
     const { cart, loggedIn, setLoggedIn } = React.useContext(Context);
     const [cartItemCount, setCartItemCount] = useState(0);
-
+    const basket = useSelector((state) => state);
+    
     useEffect(() => {
-        setCartItemCount(cart.length);
-    }, [cart]);
+        setCartItemCount(basket.length);
+    }, [basket]);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);

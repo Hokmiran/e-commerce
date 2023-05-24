@@ -10,22 +10,32 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useContext } from 'react';
 import { Context } from '../context/Context';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function CardComponent({ index }) {
+    const basket = useSelector((state) => state);
+    let dispatch = useDispatch();
 
     const { addToCart, removeFromCart, cart } = useContext(Context);
     const productInCart = cart.find((item) => item.id === index.id);
     const quantity = productInCart ? productInCart.quantity : 0;
 
-    const handleAddToCart = () => {
-        addToCart(index);
+    const add = (id) => {
+        dispatch({ type: 'ADD_TO_CART', payload: index });
     };
 
-    const handleRemoveFromCart = () => {
-        removeFromCart(index.id);
+    const remove = (id) => {
+        dispatch({ type: 'REMOVE_FROM_CART', payload: id });
     };
+    // const handleAddToCart = () => {
+    //     addToCart(index);
+    // };
 
+    // const handleRemoveFromCart = () => {
+    //     removeFromCart(index.id);
+    // };
+    console.log(basket);
     return (
 
         <Grid item xs={12} sm={6} md={4} lg={4} >
@@ -47,7 +57,7 @@ function CardComponent({ index }) {
                     <Typography gutterBottom variant="h6" component="div">
                         {index.title.substring(0, 25)}
                     </Typography>
-                    <Typography sx={{fontSize: 16}} variant="body2" color="text.secondary">
+                    <Typography sx={{ fontSize: 16 }} variant="body2" color="text.secondary">
                         {index.description.substring(0, 101)}...
                     </Typography>
                     <Typography mt={1} variant="h5" color="text.primary">
@@ -58,19 +68,20 @@ function CardComponent({ index }) {
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}
-                        onClick={handleAddToCart}
+                        onClick={() => add(index.id)}
                     >
                         Add
                     </Button>
-                    {quantity > 0 &&
+                    {/* {quantity > 0 && */}
                         <Button
                             variant="contained"
                             startIcon={<RemoveIcon />}
-                            onClick={handleRemoveFromCart}
+                            // onClick={handleRemoveFromCart}
+                            onClick={() => remove(index.id)}
                         >
                             Remove
                         </Button>
-                    }
+                    {/* } */}
                     <Typography sx={{ marginLeft: 5 }} variant="body2" color="text.secondary">
                         {quantity > 0 &&
                             <>
